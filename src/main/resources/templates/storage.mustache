@@ -2,9 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Storage</title>
+    <title>Add user</title>
 </head>
 <body>
-    <div><h1>Hello, {{name}}</h1></div>
+    <div>
+        <form method="post" action="/addUser">
+            <p><b>User login:</b><br>
+                <input name="loginInput" type="text" size="40" placeholder="login">
+            </p>
+            <p><b>User password:</b><br>
+                <input name="passInput" type="text" size="40" placeholder="password">
+            </p>
+            <p><b>Select role:</b><br>
+            <input type="text" name="roleInput" list="roleList">
+            <datalist id="roleList">
+                <option value="Admin">
+                <option value="User">
+            </datalist>
+            <p><input type="submit" value="Add user"></p>
+        </form>
+    </div>
+    <div><h3>Users list</h3></div>
+    {{#users}}
+        <div>
+            <ul>
+                <li><span>{{login}} | role: {{role}}</span></li>
+            </ul>
+        </div>
+    {{/users}}
+    {{^users}}
+        <div><p>No user</p></div>
+    {{/users}}
+    <form method="get" action="/admin">
+        <p><input type="submit" value="Admin menu"></p>
+    </form>
 </body>
 </html>

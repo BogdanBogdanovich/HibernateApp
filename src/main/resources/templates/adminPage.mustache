@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+</head>
+<body>
+
+<div><h1>Users list</h1></div>
+{{#users}}
+    <div>
+        <ul>
+            <li><span>{{login}} | role: {{role}}</span></li>
+        </ul>
+    </div>
+{{/users}}
+{{^users}}
+    <div><p>No user</p></div>
+{{/users}}
+
+<form method="get" action="/deleteUser">
+    <div><h3>Delete all users</h3></div>
+    <p><input type="submit" value="Clear"></p>
+</form>
+
+<form method="get" action="/addUser">
+
+    <p><input type="submit" value="Return"></p>
+</form>
+
+</body>
+</html>
