@@ -1,27 +1,33 @@
 package com.example.StorageApp.controllers;
 
-import com.example.StorageApp.domain.User;
+import com.example.StorageApp.dao.UserDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-@Controller()
+@Controller
+@RequestMapping("/admin")
 public class StorageController {
-    List<User> listUser = new ArrayList<>();
-    @GetMapping("/main")
-    public String main(
-            @RequestParam(name = "name", required = false, defaultValue = "Admin") String name,
-            Map<String, Object> model
-    ){
-        model.put("name", name);
-        return "main";
+    private final UserDAO userDAO;
+    @Autowired
+    public StorageController(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
-    @GetMapping("/addUser")
+
+    @GetMapping()
+    public String getUsers(Model model){
+        model.addAttribute("users", userDAO.getUsers());
+        return "admin/index";
+    }
+    @GetMapping("/{id}")
+    public String getOneUser(@PathVariable("id") int id, Model model) {
+        model.addAttribute("user", userDAO.getOneUser(id));
+        return "people/personInfo";
+    }
+
+    /*List<User> listUser = new ArrayList<>();*/
+    /*@GetMapping("/addUser")
     public String userAuthPage(Map<String, List<User>> model){
         model.put("users", listUser);
         return "storage";
@@ -30,7 +36,7 @@ public class StorageController {
     public String auth(
             @RequestParam String loginInput, @RequestParam String passInput, @RequestParam String roleInput, Map<String, List<User>> model
     ){
-        User users = new User(loginInput, passInput, roleInput);
+        *//*User users = new User(loginInput, passInput, roleInput);
         if (users.getRole().equals(""))
             users.setRole("User");
 
@@ -42,7 +48,8 @@ public class StorageController {
 
         listUser.add(users);
         model.put("users", listUser);
-        return "storage";
+        return "storage";*//*
+        return null;
     }
 
     @GetMapping("/admin")
@@ -54,6 +61,6 @@ public class StorageController {
     public String deleteUser(){
         if (listUser != null)
             listUser.clear();
-        return "/addUser";
-    }
+        return "/admin";
+    }*/
 }
