@@ -26,6 +26,21 @@ public class UserDAO {
     public User getOneUser(int id){
         return user.stream().filter(user -> user.getId() == id).findAny().orElse(null);
     }
+    public String addUser(String login, String pass, String role){
+        User people = new User();
+        people.setLogin(login);
+        people.setPassword(pass);
+        people.setRole(role);
+        if (people.getLogin().equals("") ||
+                people.getPassword().equals("") ||
+                people.getRole().equals("")){
+            System.out.println("there is not enough data to fill the user");
+            return "Fill in all fields";
+        }
+        people.setId(++USERID_COUNT);
+        user.add(people);
+        return "User added";
+    }
 
 
 }

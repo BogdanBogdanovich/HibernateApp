@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add user page</title>
+</head>
+<body>
+<div>
+  <form method="post" action="/admin/addUser">
+    <p><b>User login:</b><br>
+      <input name="loginInput" type="text" size="40" placeholder="login">
+    </p>
+    <p><b>User password:</b><br>
+      <input name="passInput" type="text" size="40" placeholder="password">
+    </p>
+    <p><b>Select role:</b><br>
+      <input type="text" name="roleInput" list="roleList">
+      <datalist id="roleList">
+        <option value="Admin">
+        <option value="User">
+      </datalist>
+    <div class="img-container" th:if="${message}">
+      <a th:text="${message}">message</a>
+    </div>
+    <p><input type="submit" value="Add user"></p>
+  </form>
+  <form method="get" action="/admin">
+    <p><input type="submit" value="Main page"></p>
+  </form>
+</div>
+</body>
+</html>

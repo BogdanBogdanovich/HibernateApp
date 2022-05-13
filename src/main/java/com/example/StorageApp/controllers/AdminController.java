@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin")
-public class StorageController {
+public class AdminController {
     private final UserDAO userDAO;
     @Autowired
-    public StorageController(UserDAO userDAO) {
+    public AdminController(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
@@ -23,7 +23,24 @@ public class StorageController {
     @GetMapping("/{id}")
     public String getOneUser(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userDAO.getOneUser(id));
-        return "people/personInfo";
+        return "admin/personInfo";
+    }
+    /*@GetMapping("/addUser")
+    public String addUserPage(){
+        return "addUser";
+    }*/
+    @GetMapping("/addUser")
+    public String addUserPage(Model model){
+        model.addAttribute("message", "");
+        return "admin/addUser";
+    }
+    @PostMapping("/addUser")
+    public String auth(
+            @RequestParam String loginInput, @RequestParam String passInput, @RequestParam String roleInput, Model model
+    ){
+        String message = userDAO.addUser(loginInput, passInput, roleInput);
+        model.addAttribute("message", message);
+        return "admin/addUser";
     }
 
     /*List<User> listUser = new ArrayList<>();*/
